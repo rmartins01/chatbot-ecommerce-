@@ -1,4 +1,4 @@
-package br.com.alura.ecomart.chatbot.web.controller;
+package com.ecomart.chatbot.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
-import br.com.alura.ecomart.chatbot.domain.service.ChatbotService;
-import br.com.alura.ecomart.chatbot.web.dto.PerguntaDto;
+import com.ecomart.chatbot.domain.service.ChatbotService;
+import com.ecomart.chatbot.web.dto.QuestionDto;
 
 @Controller
 @RequestMapping({"/", "chat"})
 public class ChatController {
 
-    private static final String PAGINA_CHAT = "chat";
+    private static final String CHAT_PAGE = "chat";
 
     private ChatbotService service;
 
@@ -24,17 +24,17 @@ public class ChatController {
     }
     
     @GetMapping
-    public String carregarPaginaChatbot() {
-        return PAGINA_CHAT;
+    public String loadChatbotPage() {
+        return CHAT_PAGE;
     }
 
     @PostMapping
     @ResponseBody
-    public ResponseBodyEmitter responderPergunta(@RequestBody PerguntaDto dto) {
-        var fluxoResposta = service.responderPergunta(dto.pergunta());
+    public ResponseBodyEmitter responderPergunta(@RequestBody QuestionDto dto) {
+        var flowAnswer = service.answerQuestion(dto.question());
         var emitter = new ResponseBodyEmitter();
 
-        fluxoResposta.subscribe(chunk -> {
+        flowAnswer.subscribe(chunk -> {
                 var token = chunk.getChoices().get(0).getMessage().getContent();
                 if (token != null) {
                         emitter.send(token);
@@ -44,9 +44,9 @@ public class ChatController {
 
         return emitter;
 }
-    @GetMapping("limpar")
-    public String limparConversa() {
-        return PAGINA_CHAT;
+    @GetMapping("clean")
+    public String cleanConversation() {
+        return CHAT_PAGE;
     }
 
 }

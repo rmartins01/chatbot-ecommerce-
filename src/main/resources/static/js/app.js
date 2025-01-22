@@ -32,7 +32,7 @@ async function enviarMensagem() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({'pergunta': mensagem}),
+        body: JSON.stringify({'question': mensagem}),
     }).then(async response => {
         if (!response.ok) {
             throw new Error('Ocorreu um erro!');
