@@ -20,7 +20,7 @@ public class ChatController {
 	private ChatbotService service;
 
 	public ChatController(ChatbotService service) {
-
+		this.service = service;
 	}
 
 	@GetMapping
