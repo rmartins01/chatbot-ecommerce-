@@ -1,6 +1,6 @@
-package br.com.alura.ecomart.chatbot.domain;
+package com.ecomart.chatbot.domain;
 
-public enum UF {
+public enum StateAbbreviation {
 
     AC,
     AL,
